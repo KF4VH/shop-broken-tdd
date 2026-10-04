@@ -82,13 +82,13 @@ src/shop/
   money.py                  деньги в целых копейках — эталон, его не трогаем
   inventory.py              часть 1: склады и резервирование
   reporting.py              часть 1: текстовый отчёт по складу
-  checkout.py               часть 2: расчёт суммы заказа (две заглушки)
+  checkout.py               часть 2: валидация заказа и расчёт суммы
   specs/checkout.md         часть 2: бизнес-ТЗ, источник истины
 tests/
   test_money.py             базовый (зелёный) набор — эталон стиля тестов
   test_inventory.py         часть 1
   test_reporting.py         часть 1
-  test_checkout.py          часть 2: один красный тест и 19 заготовок под остальные
+  test_checkout.py          часть 2: проверки валидации и расчёта заказа
 scripts/                    setup / check / doctor / reset, TDD-проверка истории
 docs/                       окружение, постановки задач, шпаргалки
 .github/workflows/          part1-ci.yml и part2-ci.yml
