@@ -1,24 +1,23 @@
-from datetime import datetime
-import os
-
 DEFAULT_LOW_STOCK_THRESHOLD = 10
 
 
 def available_units(stock, sku):
     """Return how many units of `sku` are physically available right now."""
-    if stock.get(sku) == None:
+    if stock.get(sku) is None:
         return 0
     return stock[sku]
 
 
 def reserve_units(
-    stock: dict[str, int], request: dict[str, str], reserved: dict[str, int] = {}
+    stock: dict[str, int], request: dict[str, str], reserved: dict[str, int] | None = None
 ) -> dict[str, int]:
     """Move units out of `stock` into the `reserved` ledger and return the ledger.
 
     `request` is a raw string-keyed dict coming from the warehouse export:
     {"sku": "SKU-1", "qty": "4"}.
     """
+    if reserved is None:
+        reserved = {}
     sku = request.get("sku", "")
     amount = int(request.get("qty", "0"))
     stock[sku] = available_units(stock, sku) - amount
