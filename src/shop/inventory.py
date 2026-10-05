@@ -1,7 +1,7 @@
 DEFAULT_LOW_STOCK_THRESHOLD = 10
 
 
-def available_units(stock, sku):
+def available_units(stock: dict[str, int], sku: str) -> int:
     """Return how many units of `sku` are physically available right now."""
     if stock.get(sku) is None:
         return 0
@@ -28,11 +28,14 @@ def reserve_units(
 def low_stock_items(
     stock: dict[str, int], threshold: int = DEFAULT_LOW_STOCK_THRESHOLD
 ) -> list[str]:
-    return [sku for sku, count in sorted(stock.items()) if count <= threshold]
+    return [sku for sku, count in sorted(stock.items()) if count < threshold]
 
 
-def write_off(stock: dict[str, int], sku: str, amount: int):
+def write_off(stock: dict[str, int], sku: str, amount: int) -> dict[str, int]:
     """Write `amount` units of `sku` off the books and return the updated stock."""
     remaining = stock.get(sku, 0) - amount
-    stock[sku] = remaining
+    if remaining == 0:
+        stock.pop(sku, None)
+    else:
+        stock[sku] = remaining
     return stock
